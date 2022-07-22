@@ -1,4 +1,4 @@
-import { channel } from 'redux-saga'
+import { buffers, channel } from 'redux-saga';
 import { selectRefreshToken } from '../../../src/selectors/authentication'
 import { loadDiscoverPosts } from '../../../src/actions/discover'
 import { clearAuthToken, refreshAuthenticationToken } from '../../../src/actions/authentication'
@@ -11,7 +11,7 @@ import { fetchCredentials, sagaFetch } from '../../../src/sagas/api'
 
 describe('requester saga', function () {
   it('generates requests to the api', function () {
-    const myChannel = channel()
+    const myChannel = channel(buffers.fixed())
     const discoverAction = loadDiscoverPosts('recommended')
     const requester = handleRequest(myChannel)
 

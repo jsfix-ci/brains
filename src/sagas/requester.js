@@ -1,3 +1,4 @@
+import { buffers } from 'redux-saga';
 /* eslint-disable no-constant-condition,no-underscore-dangle */
 import React from 'react'
 import get from 'lodash/get'
@@ -296,11 +297,11 @@ function* refireUnauthorizedActions(authSuccessChannel) {
 }
 
 export default function* requester() {
-  const requestChannel = yield actionChannel(requestTypes)
+  const requestChannel = yield actionChannel(requestTypes, buffers.fixed())
   const authSuccessChannel = yield actionChannel([
     ACTION_TYPES.AUTHENTICATION.REFRESH_SUCCESS,
     ACTION_TYPES.AUTHENTICATION.USER_SUCCESS,
-  ])
+  ], buffers.fixed())
   yield [
     fork(refireUnauthorizedActions, authSuccessChannel),
     fork(handleRequest, requestChannel),
